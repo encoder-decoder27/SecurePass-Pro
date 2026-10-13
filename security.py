@@ -1,6 +1,8 @@
+import math
+import secrets
+import string
 
 from zxcvbn import zxcvbn
-
 
 def analyze_password(password):
     if not password:
@@ -95,5 +97,4 @@ def generate_password(length=16, use_symbols=True):
     )
 
     secrets.SystemRandom().shuffle(characters)
-
     return "".join(characters)
