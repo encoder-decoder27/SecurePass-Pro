@@ -56,3 +56,44 @@ def analyze_password(password):
         "findings": findings,
         "recommendations": recommendations
     }
+if __name__ == "__main__":
+    test_password = "AnUjA_#$"
+    result = analyze_password(test_password)
+
+    print("SecurePass Pro Test")
+    print("Score:", result["score"])
+    print("Strength:", result["strength"])
+    print("Estimated entropy:", result["entropy"])
+    print("Findings:", result["findings"])
+    print("Recommendations:", result["recommendations"])
+
+    import secrets
+import string
+
+
+def generate_password(length=16, use_symbols=True):
+    if length < 12:
+        raise ValueError("Password length must be at least 12.")
+
+    alphabet = string.ascii_letters + string.digits
+
+    if use_symbols:
+        alphabet += "!@#$%^&*()-_=+"
+
+    characters = [
+        secrets.choice(string.ascii_lowercase),
+        secrets.choice(string.ascii_uppercase),
+        secrets.choice(string.digits),
+    ]
+
+    if use_symbols:
+        characters.append(secrets.choice("!@#$%^&*()-_=+"))
+
+    characters.extend(
+        secrets.choice(alphabet)
+        for _ in range(length - len(characters))
+    )
+
+    secrets.SystemRandom().shuffle(characters)
+
+    return "".join(characters)
